@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
+//SELF IMPORTS
+import { Calculator } from './main';
+import {AppContext} from './provider';
+
 function App() {
+
+  const [toggleFullScreen, setToggleFullScreen] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <AppContext.Provider value={{toggleFullScreen, setToggleFullScreen}}>
+        <div id="wrapper">
+          <div id="app" className="App" style={{width: `${toggleFullScreen ? '100%' : '320px'}`}}>
+            <Calculator />
+          </div>
+        </div>
+        <button 
+          onClick={() => setToggleFullScreen(!toggleFullScreen)} 
+          className='float'>
+            {toggleFullScreen ? <span>&#8690;</span> : <span>&#8689;</span>}
+            <br />
+        </button>
+      </AppContext.Provider>
+    </>
   );
 }
 
